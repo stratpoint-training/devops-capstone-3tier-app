@@ -254,10 +254,18 @@ argocd app delete task-app               # Remove from ArgoCD
 
 ## Next Steps
 
-1. Add monitoring
-2. Set up logging
-3. Configure backups
-4. Implement scaling
+Now that your application is deployed and working, it's time to add comprehensive observability:
+
+1. [Set Up Observability Stack](./06-observability-setup.md) - Install Prometheus, Grafana, Loki, and Tempo
+2. [Create Grafana Dashboards](./07-grafana-dashboards.md) - Build monitoring dashboards
+3. [Configure Alerting](./08-alerting-setup.md) - Set up intelligent alerts
+4. [Instrument Your Application](./09-app-instrumentation.md) - Add metrics and logging to your code
+
+Additional improvements:
+- Configure backups
+- Implement horizontal scaling
+- Add security scanning
+- Set up multiple environments
 
 ## Getting Help
 

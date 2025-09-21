@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevOps Engineering Course</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50">
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold text-center mb-8">DevOps Engineering Course</h1>
+
+    <!-- Course Overview -->
+    <div class="bg-white rounded-lg shadow p-6 mb-6">
+      <h2 class="text-xl font-semibold text-blue-600 mb-4">Course Overview</h2>
+      <p class="text-gray-600 mb-4">Hands-on training in modern DevOps practices through project-based learning. You'll
+        build a complete 3-tier application while learning containerization, orchestration, CI/CD, GitOps, and
+        comprehensive observability with Prometheus, Grafana, Loki, and Tempo.</p>
+      <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-4">
+        <p class="text-yellow-700 font-medium">Learn while building: Follow along with the video resources as you
+          implement each component of your project.</p>
+      </div>
+      <p class="text-gray-600">Duration: 4 weeks</p>
+    </div>
+
+    <!-- Prerequisites -->
+    <div class="bg-white rounded-lg shadow p-6 mb-6">
+      <h2 class="text-xl font-semibold text-blue-600 mb-4">Prerequisites</h2>
+      <div class="space-y-6">
+        <!-- Required Accounts -->
+        <div>
+          <h3 class="text-lg font-semibold text-gray-800 mb-2">Required Accounts</h3>
+            <a href="https://gitlab.com" target="_blank" rel="noopener noreferrer" class="bg-gray-50 p-4 rounded border border-gray-200 block hover:bg-gray-100 transition">
+            <div class="flex items-center space-x-2">
+              <svg class="w-6 h-6 text-orange-500" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M22.65 14.39L12 22.13 1.35 14.39a.84.84 0 0 1-.3-.94l1.22-3.78 2.44-7.51A.42.42 0 0 1 4.82 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.49h8.1l2.44-7.51A.42.42 0 0 1 18.6 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.51L23 13.45a.84.84 0 0 1-.35.94z" />
+              </svg>
+              <span class="font-medium">GitLab Account</span>
+            </div>
+            <p class="text-sm text-gray-600 mt-1 ml-8">Create an account at gitlab.com</p>
+            </a>
+        </div>
+
+        <!-- Local Environment Setup -->
+        <div>
+          <h3 class="text-lg font-semibold text-gray-800 mb-2">Local Environment Setup</h3>
+          <div class="bg-gray-50 p-4 rounded border border-gray-200">
+            <p class="text-gray-700 mb-3">Choose one of the following for local Kubernetes setup:</p>
+            <div class="space-y-4">
+              <!-- Docker Desktop -->
+              <div class="flex items-start space-x-2">
+                <div class="flex-shrink-0 mt-1">
+                  <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <div>
+                  <span class="font-medium">Docker Desktop</span>
+                  <p class="text-sm text-gray-600">All-in-one solution with Kubernetes support for Windows/Mac/Linux</p>
+                  <div class="bg-green-50 text-green-700 text-sm px-3 py-1 rounded mt-1 inline-block">
+                    Recommended for Easy Setup ✨
+                  </div>
+                </div>
+              </div>
+
+              <!-- Rancher Desktop -->
+              <div class="flex items-start space-x-2">
+                <div class="flex-shrink-0 mt-1">
+                  <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <div>
+                  <span class="font-medium">Rancher Desktop</span>
+                  <p class="text-sm text-gray-600">Complete container management solution with built-in Kubernetes</p>
+                  <div class="bg-green-50 text-green-700 text-sm px-3 py-1 rounded mt-1 inline-block">
+                    Recommended for Production-ready environment ✨
+                  </div>
+                </div>
+              </div>
+
+              <!-- Minikube -->
+              <div class="flex items-start space-x-2">
+                <div class="flex-shrink-0 mt-1">
+                  <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <span class="font-medium">Minikube</span>
+                  <p class="text-sm text-gray-600">Single-node Kubernetes cluster, good for learning</p>
+                </div>
+              </div>
+
+              <!-- Kind -->
+              <div class="flex items-start space-x-2">
+                <div class="flex-shrink-0 mt-1">
+                  <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <span class="font-medium">Kind (Kubernetes IN Docker)</span>
+                  <p class="text-sm text-gray-600">Lightweight, uses Docker containers as nodes</p>
+                </div>
+              </div>
+
+              <!-- k3s -->
+              <div class="flex items-start space-x-2">
+                <div class="flex-shrink-0 mt-1">
+                  <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <span class="font-medium">k3s</span>
+                  <p class="text-sm text-gray-600">Lightweight Kubernetes for IoT & Edge computing</p>
+                </div>
+              </div>
+
+              <!-- k3d -->
+              <div class="flex items-start space-x-2">
+                <div class="flex-shrink-0 mt-1">
+                  <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <span class="font-medium">k3d</span>
+                  <p class="text-sm text-gray-600">Runs k3s clusters in Docker, good for CI/CD environments</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-4 space-y-4">
+              <div class="bg-blue-50 p-3 rounded">
+                <p class="text-sm text-blue-700">💡 Note: We recommend:</p>
+                <ul class="text-sm text-blue-700 list-disc list-inside mt-2">
+                  <li>Docker Desktop for the easiest setup across all operating systems</li>
+                  <li>Rancher Desktop if you need a production-ready environment with advanced features</li>
+                </ul>
+              </div>
+
+              <div class="bg-yellow-50 p-3 rounded">
+                <p class="text-sm text-yellow-800 font-medium">⚠️ Important Container Runtime Note:</p>
+                <p class="text-sm text-yellow-700 mt-2">
+                  If you choose Minikube, k3s, or other options without built-in Docker support, you'll need to
+                  separately install a container runtime (like Docker or containerd) before setting up Kubernetes.
+                </p>
+                <ul class="text-sm text-yellow-700 list-disc list-inside mt-2">
+                  <li>Docker Desktop: Includes container runtime</li>
+                  <li>Rancher Desktop: Includes container runtime</li>
+                  <li>Others: Require separate container runtime installation</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Video Resources -->
+    <div class="grid md:grid-cols-3 gap-6 mb-8">
+      <!-- Docker & Kubernetes -->
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold text-blue-600 mb-2">1. Docker & Kubernetes</h2>
+        <p class="text-sm text-gray-500 mb-4">Week 1 Implementation Guide</p>
+        <div class="space-y-2">
+          <a href="https://youtu.be/kTp5xUtcalw?si=W0mSEz39FPCmRuxU" target="_blank"
+            class="flex items-center text-gray-600 hover:text-red-600 transition-colors">
+            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
+            </svg>
+            Video Resource
+          </a>
+        </div>
+      </div>
+
+      <!-- Helm -->
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold text-blue-600 mb-2">2. Helm</h2>
+        <p class="text-sm text-gray-500 mb-4">Week 2 Implementation Guide</p>
+        <a href="https://youtube.com/playlist?list=PLSwo-wAGP1b8svO5fbAr7ko2Buz6GuH1g&si=fKTef5ikIKmpXeQx"
+          target="_blank" class="flex items-center text-gray-600 hover:text-red-600 transition-colors">
+          <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
+          </svg>
+          Video Resource
+        </a>
+      </div>
+
+      <!-- GitLab CI/CD -->
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold text-blue-600 mb-2">3. GitLab CI/CD</h2>
+        <p class="text-sm text-gray-500 mb-4">Week 2-3 Implementation Guide</p>
+        <a href="https://youtu.be/qP8kir2GUgo?si=GiWixnkZc2UEwPP2" target="_blank"
+          class="flex items-center text-gray-600 hover:text-red-600 transition-colors">
+          <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
+          </svg>
+          Video Resource
+        </a>
+      </div>
+
+      <!-- ArgoCD -->
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold text-blue-600 mb-2">4. ArgoCD</h2>
+        <p class="text-sm text-gray-500 mb-4">Week 3 Implementation Guide</p>
+        <a href="https://youtu.be/MeU5_k9ssrs?si=XDs_KrLqMV_95uQ9" target="_blank"
+          class="flex items-center text-gray-600 hover:text-red-600 transition-colors">
+          <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
+          </svg>
+          Video Resource
+        </a>
+      </div>
+
+      <!-- Observability Stack -->
+      <div class="bg-white rounded-lg shadow p-6">
+        <h2 class="text-xl font-semibold text-blue-600 mb-2">5. Observability Stack</h2>
+        <p class="text-sm text-gray-500 mb-4">Week 4 Implementation Guide - Monitoring & Logging</p>
+        <div class="space-y-2">
+          <a href="https://youtu.be/h4Sl21AKiDg?si=YvQxGKJLMNOPQRST" target="_blank"
+            class="flex items-center text-gray-600 hover:text-red-600 transition-colors">
+            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
+            </svg>
+            Prometheus & Grafana Setup
+          </a>
+          <a href="https://youtu.be/iXe7bf0uNuY?si=ABCDEFGHIJKLMNOp" target="_blank"
+            class="flex items-center text-gray-600 hover:text-red-600 transition-colors">
+            <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
+            </svg>
+            Loki & Tempo Integration
+            <a href="https://youtube.com/playlist?list=PLYrn63eEqAzZL2TaS0pXXw-_DEl3SsAF_&si=BUh5r5ln3XuIl2wa" target="_blank"   class="flex items-center text-gray-600 hover:text-red-600 transition-colors"></a>
+        </div>
+      </div>
+
+      <!-- Additional Comprehensive Guide -->
+      <div class="bg-white rounded-lg shadow p-6 col-span-3">
+        <h2 class="text-xl font-semibold text-blue-600 mb-2">Complete GitOps Implementation Guide</h2>
+        <p class="text-sm text-gray-500 mb-4">Comprehensive Tutorial - Recommended to watch before starting
+          implementation</p>
+        <a href="https://youtu.be/OvgXuGskdCM?si=V-aW18wj19IDXYw3" target="_blank"
+          class="flex items-center text-gray-600 hover:text-red-600 transition-colors">
+          <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" />
+          </svg>
+          GitOps: Building and Deploying Applications on Kubernetes with GitLab CI/CD, Helm Charts, and ArgoCD
+        </a>
+      </div>
+    </div>
+
+    <!-- GitOps Workflow -->
+    <div class="bg-white rounded-lg shadow p-6 mb-8">
+      <h2 class="text-xl font-semibold text-blue-600 mb-4">Implementation Workflow</h2>
+      <img src="https://minio-s3.rcdc.me/public/cicd-workflow.png" alt="GitOps Workflow" class="w-full mb-6">
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="bg-gray-50 p-4 rounded">
+          <h3 class="font-semibold text-gray-800 mb-2">Developer Flow</h3>
+          <ul class="list-disc list-inside text-gray-600">
+            <li>Make code changes</li>
+            <li>Build and test locally</li>
+            <li>Commit and push</li>
+          </ul>
+        </div>
+        <div class="bg-gray-50 p-4 rounded">
+          <h3 class="font-semibold text-gray-800 mb-2">CI/CD Pipeline</h3>
+          <ul class="list-disc list-inside text-gray-600">
+            <li>Automated testing</li>
+            <li>Build container images</li>
+            <li>Update manifests</li>
+          </ul>
+        </div>
+        <div class="bg-gray-50 p-4 rounded">
+          <h3 class="font-semibold text-gray-800 mb-2">GitOps Deployment</h3>
+          <ul class="list-disc list-inside text-gray-600">
+            <li>ArgoCD detects changes</li>
+            <li>Sync cluster state</li>
+            <li>Deploy updates</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Observability Stack -->
+    <div class="bg-white rounded-lg shadow p-6 mb-8">
+      <h2 class="text-xl font-semibold text-blue-600 mb-4">Observability Stack Implementation</h2>
+
+
+      <div class="grid md:grid-cols-2 gap-6 mb-6">
+        <!-- Prometheus -->
+        <div class="bg-orange-50 border-l-4 border-orange-500 p-4">
+          <h3 class="text-lg font-semibold text-orange-800 mb-2">🔍 Prometheus</h3>
+          <p class="text-orange-700 mb-3">Metrics collection and monitoring system</p>
+          <ul class="list-disc list-inside text-orange-600 text-sm space-y-1">
+            <li>Scrapes metrics from applications</li>
+            <li>Time-series database</li>
+            <li>Powerful query language (PromQL)</li>
+            <li>Alerting capabilities</li>
+          </ul>
+        </div>
+
+        <!-- Grafana -->
+        <div class="bg-blue-50 border-l-4 border-blue-500 p-4">
+          <h3 class="text-lg font-semibold text-blue-800 mb-2">📊 Grafana</h3>
+          <p class="text-blue-700 mb-3">Visualization and dashboarding platform</p>
+          <ul class="list-disc list-inside text-blue-600 text-sm space-y-1">
+            <li>Beautiful dashboards</li>
+            <li>Multiple data source support</li>
+            <li>Alerting and notifications</li>
+            <li>User management</li>
+          </ul>
+        </div>
+
+        <!-- Loki -->
+        <div class="bg-green-50 border-l-4 border-green-500 p-4">
+          <h3 class="text-lg font-semibold text-green-800 mb-2">📝 Loki</h3>
+          <p class="text-green-700 mb-3">Log aggregation system</p>
+          <ul class="list-disc list-inside text-green-600 text-sm space-y-1">
+            <li>Horizontally scalable</li>
+            <li>Multi-tenant</li>
+            <li>LogQL query language</li>
+            <li>Cost-effective storage</li>
+          </ul>
+        </div>
+
+        <!-- Tempo -->
+        <div class="bg-purple-50 border-l-4 border-purple-500 p-4">
+          <h3 class="text-lg font-semibold text-purple-800 mb-2">🔗 Tempo</h3>
+          <p class="text-purple-700 mb-3">Distributed tracing backend</p>
+          <ul class="list-disc list-inside text-purple-600 text-sm space-y-1">
+            <li>OpenTelemetry support</li>
+            <li>High volume tracing</li>
+            <li>Cost-effective storage</li>
+            <li>Grafana integration</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Implementation Steps -->
+      <div class="bg-gray-50 p-6 rounded-lg">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">Implementation Steps</h3>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <h4 class="font-semibold text-gray-700 mb-3">1. Deploy Stack</h4>
+            <div class="bg-white p-3 rounded border text-sm">
+              <code class="text-gray-800">
+                # Add Grafana Helm repository<br>
+                helm repo add grafana https://grafana.github.io/helm-charts<br>
+                helm repo update<br><br>
+                # Install Prometheus<br>
+                helm install prometheus grafana/kube-prometheus-stack<br><br>
+                # Install Loki<br>
+                helm install loki grafana/loki-stack<br><br>
+                # Install Tempo<br>
+                helm install tempo grafana/tempo
+              </code>
+            </div>
+          </div>
+          <div>
+            <h4 class="font-semibold text-gray-700 mb-3">2. Configure Applications</h4>
+            <div class="bg-white p-3 rounded border text-sm">
+              <code class="text-gray-800">
+                # Add metrics endpoints to your apps<br>
+                # Configure log shipping to Loki<br>
+                # Instrument with OpenTelemetry<br>
+                # Create Grafana dashboards<br>
+                # Set up alerting rules
+              </code>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project Implementation -->
+    <div class="bg-white rounded-lg shadow p-6 mb-8">
+      <h2 class="text-xl font-semibold text-blue-600 mb-4">Project Details</h2>
+
+      <!-- Repository Setup -->
+      <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
+        <h3 class="text-lg font-semibold text-red-800 mb-2">Important: Repository Setup</h3>
+        <div class="text-red-700">
+          <p class="mb-2">The base code is hosted on GitHub but must be migrated to GitLab for the project:</p>
+          <ol class="list-decimal list-inside space-y-2">
+            <li>Clone the GitHub repository:
+              <code
+                class="block bg-red-100 text-black p-2 mt-1 rounded">git clone https://github.com/stratpoint-training/devops-capstone-3tier-app.git</code>
+            </li>
+            <li>Create a new GitLab (gitlab.com) repository</li>
+            <li>Update the remote origin:
+              <code
+                class="block bg-red-100 text-black p-2 mt-1 rounded">git remote set-url origin [your-gitlab-repo-url]</code>
+            </li>
+            <li>Push to GitLab:
+              <code class="block bg-red-100 text-black p-2 mt-1 rounded">git push -u origin main</code>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- Repository Info -->
+      <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+        <p class="text-blue-700">Base Repository: <a
+            href="https://github.com/stratpoint-training/devops-capstone-3tier-app.git" target="_blank"
+            class="underline hover:text-blue-800">3-tier-app Template</a></p>
+      </div>
+
+      <!-- Project Focus -->
+      <div class="bg-green-50 border-l-4 border-green-500 p-4 mb-6">
+        <h3 class="text-lg font-semibold text-green-800 mb-2">Project Focus</h3>
+        <p class="text-green-700">Your task is to deploy the 3-tier application located in the <code
+            class="bg-green-100 px-2 py-1 rounded">/app</code> directory using DevOps practices and tools.</p>
+      </div>
+
+      <!-- Repository Structure -->
+      <div class="mb-6">
+        <h3 class="text-lg font-semibold text-gray-800 mb-3">Repository Structure</h3>
+        <div class="bg-gray-50 p-4 rounded">
+          <pre class="text-sm text-gray-600 overflow-auto">
+        /app                    # Your deployment target
+        ├── frontend           # React frontend
+        ├── backend            # Node.js API
+        ├── database          # PostgreSQL setup
+        └── QUICKSTART.md     # Local development guide
+
+        /docs                   # Implementation guides
+        ├── 01-local-setup.md
+        ├── 02-helm-charts.md
+        ├── 03-gitlab-ci.md
+        ├── 04-argocd-setup.md
+        ├── 05-deployment.md
+        ├── 06-observability-setup.md
+        ├── 07-grafana-dashboards.md
+        ├── 08-alerting-setup.md
+        └── 09-app-instrumentation.md</pre>
+        </div>
+      </div>
+
+      <!-- Documentation Notice -->
+      <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-6">
+        <h3 class="text-lg font-semibold text-yellow-800 mb-2">Implementation Guide</h3>
+        <p class="text-yellow-700 mb-2">Follow these steps:</p>
+        <ol class="list-decimal list-inside text-yellow-700 space-y-2">
+          <li>Start with <code class="bg-yellow-100 px-2 py-1 rounded">/app/QUICKSTART.md</code> to test locally</li>
+          <li>Read implementation guides in <code class="bg-yellow-100 px-2 py-1 rounded">/docs</code> directory</li>
+          <li>Follow the guides in numerical order (01 → 05)</li>
+          <li>Check individual README files in each component directory</li>
+        </ol>
+      </div>
+
+      <!-- Technical Stack -->
+      <div class="mb-6">
+        <h3 class="text-lg font-semibold text-gray-800 mb-3">Components to Deploy</h3>
+        <ul class="grid md:grid-cols-2 gap-4">
+          <li class="bg-gray-50 p-3 rounded">
+            <span class="font-semibold">Frontend:</span> React Application
+            <p class="text-sm text-gray-600 mt-1">Location: /app/frontend</p>
+          </li>
+          <li class="bg-gray-50 p-3 rounded">
+            <span class="font-semibold">Backend:</span> Node.js API
+            <p class="text-sm text-gray-600 mt-1">Location: /app/backend</p>
+          </li>
+          <li class="bg-gray-50 p-3 rounded">
+            <span class="font-semibold">Database:</span> PostgreSQL
+            <p class="text-sm text-gray-600 mt-1">Location: /app/database</p>
+          </li>
+          <li class="bg-gray-50 p-3 rounded">
+            <span class="font-semibold">Infrastructure:</span> Kubernetes with Helm
+            <p class="text-sm text-gray-600 mt-1">Create your own charts</p>
+          </li>
+          <li class="bg-gray-50 p-3 rounded">
+            <span class="font-semibold">CI/CD:</span> GitLab CI Pipeline
+            <p class="text-sm text-gray-600 mt-1">Follow /docs/03-gitlab-ci.md</p>
+          </li>
+          <li class="bg-gray-50 p-3 rounded">
+            <span class="font-semibold">Deployment:</span> ArgoCD GitOps
+            <p class="text-sm text-gray-600 mt-1">Follow /docs/04-argocd-setup.md</p>
+          </li>
+          <li class="bg-gray-50 p-3 rounded">
+            <span class="font-semibold">Monitoring:</span> Prometheus & Grafana
+            <p class="text-sm text-gray-600 mt-1">Metrics collection and visualization</p>
+          </li>
+          <li class="bg-gray-50 p-3 rounded">
+            <span class="font-semibold">Logging:</span> Loki
+            <p class="text-sm text-gray-600 mt-1">Centralized log aggregation</p>
+          </li>
+          <li class="bg-gray-50 p-3 rounded">
+            <span class="font-semibold">Tracing:</span> Tempo
+            <p class="text-sm text-gray-600 mt-1">Distributed tracing system</p>
+          </li>
+          <li class="bg-gray-50 p-3 rounded">
+            <span class="font-semibold">Observability:</span> Complete Stack
+            <p class="text-sm text-gray-600 mt-1">Integrated monitoring solution</p>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Timeline -->
+      <div class="mb-6">
+        <h3 class="text-lg font-semibold text-gray-800 mb-3">Weekly Implementation Plan</h3>
+        <div class="space-y-4">
+          <div class="bg-gray-50 p-4 rounded">
+            <h4 class="font-semibold text-gray-700 mb-2">Week 1: Containerization</h4>
+            <ul class="list-disc list-inside text-gray-600">
+              <li>Set up development environment</li>
+              <li>Build container images</li>
+              <li>Basic Kubernetes deployment</li>
+            </ul>
+          </div>
+          <div class="bg-gray-50 p-4 rounded">
+            <h4 class="font-semibold text-gray-700 mb-2">Week 2: Infrastructure</h4>
+            <ul class="list-disc list-inside text-gray-600">
+              <li>Create Helm charts</li>
+              <li>Set up GitLab CI</li>
+              <li>Implement testing</li>
+            </ul>
+          </div>
+          <div class="bg-gray-50 p-4 rounded">
+            <h4 class="font-semibold text-gray-700 mb-2">Week 3: GitOps</h4>
+            <ul class="list-disc list-inside text-gray-600">
+              <li>Configure ArgoCD</li>
+              <li>Set up GitOps workflow</li>
+              <li>Deploy observability stack</li>
+            </ul>
+          </div>
+          <div class="bg-gray-50 p-4 rounded">
+            <h4 class="font-semibold text-gray-700 mb-2">Week 4: Monitoring & Finalization</h4>
+            <ul class="list-disc list-inside text-gray-600">
+              <li>Configure Prometheus metrics</li>
+              <li>Set up Grafana dashboards</li>
+              <li>Implement Loki logging</li>
+              <li>Configure Tempo tracing</li>
+              <li>End-to-end testing</li>
+              <li>Documentation</li>
+              <li>Final presentation</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Presentation -->
+      <div>
+        <h3 class="text-lg font-semibold text-gray-800 mb-3">Final Presentation</h3>
+        <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-4">
+          <p class="text-yellow-700">Duration: 30 minutes (20 minutes presentation + 10 minutes Q&A)</p>
+        </div>
+        <div class="grid md:grid-cols-2 gap-4">
+          <div class="bg-gray-50 p-4 rounded">
+            <h4 class="font-semibold text-gray-700 mb-2">Technical Demo (40%)</h4>
+            <ul class="list-disc list-inside text-gray-600">
+              <li>Working application</li>
+              <li>CI/CD pipeline</li>
+              <li>GitOps workflow</li>
+              <li>Prometheus metrics collection</li>
+              <li>Grafana dashboards</li>
+              <li>Loki log aggregation</li>
+              <li>Tempo distributed tracing</li>
+              <li>Complete observability stack</li>
+            </ul>
+          </div>
+          <div class="bg-gray-50 p-4 rounded">
+            <h4 class="font-semibold text-gray-700 mb-2">Documentation (20%)</h4>
+            <ul class="list-disc list-inside text-gray-600">
+              <li>Setup guides</li>
+              <li>Architecture diagrams</li>
+              <li>Runbooks</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -72,6 +72,17 @@ timeline
            : Deploy app
 ```
 
+### Week 3-4: Observability & Monitoring
+```mermaid
+timeline
+    Observability Stack : Install Prometheus
+                        : Configure Grafana
+                        : Set up Loki & Tempo
+    Application Monitoring : Instrument code
+                           : Create dashboards
+                           : Configure alerts
+```
+
 You'll learn to:
 
 1. **Local Kubernetes Setup**
@@ -93,6 +104,11 @@ You'll learn to:
    - Install ArgoCD
    - Configure applications
    - Implement GitOps workflow
+
+5. **Observability Stack**
+   - Deploy Prometheus, Grafana, Loki, Tempo
+   - Create monitoring dashboards
+   - Set up alerting and instrumentation
 
 ## Step-by-Step Guides
 
@@ -121,6 +137,26 @@ You'll learn to:
    - Testing everything
    - Troubleshooting
 
+6. [Observability Setup](./06-observability-setup.md)
+   - Installing the PGLT stack
+   - Basic configuration
+   - Testing monitoring
+
+7. [Grafana Dashboards](./07-grafana-dashboards.md)
+   - Creating effective dashboards
+   - Essential panels and metrics
+   - Best practices
+
+8. [Alerting Setup](./08-alerting-setup.md)
+   - Configuring alerts
+   - Notification channels
+   - Alert best practices
+
+9. [Application Instrumentation](./09-app-instrumentation.md)
+   - Adding metrics to your code
+   - Structured logging
+   - Performance monitoring
+
 ## Getting Help
 
 If you get stuck:
@@ -139,6 +175,16 @@ If you get stuck:
 - Days 1-2: GitLab CI
 - Days 3-4: ArgoCD
 - Day 5: Final testing
+
+### Week 3: Observability
+- Days 1-2: Install monitoring stack
+- Days 3-4: Create dashboards and alerts
+- Day 5: Application instrumentation
+
+### Week 4: Advanced Monitoring
+- Days 1-2: Advanced dashboards
+- Days 3-4: Performance optimization
+- Day 5: Documentation and presentation
 
 Remember:
 - Take it step by step

@@ -47,7 +47,11 @@ Access the application at:
     ├── 02-helm-charts.md    # Helm configuration
     ├── 03-gitlab-ci.md      # CI/CD pipeline
     ├── 04-argocd-setup.md   # ArgoCD setup
-    └── 05-deployment.md     # Deployment guide
+    ├── 05-deployment.md     # Deployment guide
+    ├── 06-observability-setup.md    # PGLT stack setup
+    ├── 07-grafana-dashboards.md     # Dashboard creation
+    ├── 08-alerting-setup.md         # Alerting configuration
+    └── 09-app-instrumentation.md    # Code instrumentation
 ```
 
 ## Implementation Requirements
@@ -67,10 +71,17 @@ Access the application at:
 - Container image management
 - Deployment automation
 
-### 4. ArgoCD Implementation (25%)
+### 4. ArgoCD Implementation (20%)
 - GitOps workflow
 - Application synchronization
 - Deployment management
+
+### 5. Observability Stack (20%)
+- Prometheus metrics collection
+- Grafana dashboards and visualization
+- Loki log aggregation
+- Tempo distributed tracing
+- Application instrumentation
 
 ## Documentation
 
@@ -90,6 +101,16 @@ Access the application at:
 - Days 3-4: ArgoCD configuration
 - Day 5: Final testing
 
+### Week 3: Observability
+- Days 1-2: Install Prometheus, Grafana, Loki, Tempo
+- Days 3-4: Create dashboards and configure alerts
+- Day 5: Application instrumentation
+
+### Week 4: Advanced Monitoring
+- Days 1-2: Advanced dashboards and performance monitoring
+- Days 3-4: Optimization and troubleshooting
+- Day 5: Documentation and final presentation
+
 ## Evaluation Criteria
 
 ### Basic Implementation (70-79%)
@@ -102,12 +123,16 @@ Access the application at:
 - Well-organized resources
 - Environment separation
 - Working CI/CD pipeline
-- Basic monitoring
+- Basic observability stack
+- Functional dashboards and alerts
 
 ### Advanced Implementation (90-100%)
 - Multiple environments
 - Automated testing
 - Automated sync policies
+- Complete observability implementation
+- Advanced dashboards and alerting
+- Application performance monitoring
 - Comprehensive documentation
 
 ## Optional Features
@@ -120,9 +145,10 @@ Access the application at:
    - Health monitoring
    - Rollback strategies
 
-3. **Monitoring** (+5%)
-   - Health checks
-   - Logging setup
+3. **Advanced Observability** (+5%)
+   - Custom metrics and dashboards
+   - Distributed tracing implementation
+   - Performance optimization based on monitoring data
 
 ## Support
 
