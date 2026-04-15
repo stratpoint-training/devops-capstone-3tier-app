@@ -1,10 +1,12 @@
-# DevOps Implementation Guide
+# DevSecOps Implementation Guide — Phase 2
 
-Welcome! This guide will walk you through implementing DevOps practices for a simple task management application. Don't worry if some concepts are new - we'll explain everything step by step.
+Welcome to Phase 2! This guide will walk you through securing the pipeline and cluster you built in Phase 1. Security is not a separate step — it runs at every stage.
+
+> **Prerequisite:** Your Phase 1 implementation (Kubernetes, Helm, GitLab CI, ArgoCD, Observability) must be working before starting here.
 
 ## The Big Picture
 
-Before diving into the technical details, let's understand what we're building:
+In Phase 1 you built this:
 
 ```mermaid
 graph LR
@@ -15,208 +17,114 @@ graph LR
     E --> F[Running App]
 ```
 
-1. You'll write code and push to GitLab
-2. GitLab CI automatically builds container images
-3. ArgoCD watches for changes and updates Kubernetes
-4. Your app runs in Kubernetes
-
-This is called a "GitOps" workflow - everything starts with a git push!
-
-## Starting Point: The Sample App
-
-We'll use a simple task management application (provided in the `/app` directory) to learn DevOps practices. It has three parts:
+In Phase 2 you will secure every stage of it:
 
 ```mermaid
-graph TD
-    A[Frontend: React] --> B[Backend: Node.js]
-    B --> C[Database: PostgreSQL]
+graph LR
+    A[Your Code] --> B[GitLab CI]
+    B --> C[Container Registry]
+    C --> D[ArgoCD]
+    D --> E[Kubernetes]
+    E --> F[Running App]
+
+    S1[Gitleaks · Semgrep · Trivy] -.->|scan| B
+    S2[Syft · Cosign] -.->|sign + SBOM| C
+    S3[Kyverno · ESO] -.->|enforce + secrets| D
+    S4[Falco] -.->|monitor| F
 ```
 
-First, let's make sure you can run it locally:
-   ```bash
-   cd app
-   docker compose up
-   ```
+## What You'll Implement
 
-2. Test that it works:
-   - Frontend: http://localhost:3000 (React dev server)
-   - Backend API: http://localhost:3001
-   - Try the features:
-     * Create a task
-     * Update its status
-     * Delete the task
+| # | Control | Tools |
+|---|---|---|
+| 1 | Pipeline Security | Gitleaks, Semgrep, Trivy |
+| 2 | Secrets Management | External Secrets Operator, HashiCorp Vault |
+| 3 | Manifest Security | Checkov |
+| 4 | Admission Control | Kyverno |
+| 5 | Supply Chain Security | Syft, Cosign |
+| 6 | Runtime Security | Falco |
 
-## Your Learning Journey
+## Two-Week Timeline
 
-We'll implement DevOps practices in small, manageable steps:
-
-### Week 1: Building the Foundation
+### Week 1: Pipeline & Cluster Security
 ```mermaid
 timeline
-    Local Setup : Run app locally
-                : Set up Kubernetes
-                : Learn basic commands
-    Helm : Package app
-         : Configure deployment
-         : Test locally
+    Days 1-2 : Pipeline scanning
+             : Gitleaks · Semgrep · Trivy
+    Days 3-4 : Secrets management
+             : ESO + Vault
+    Day 5    : Manifest security
+             : Checkov on Helm charts
 ```
 
-### Week 2: Automation & GitOps
+### Week 2: Advanced Controls & Runtime
 ```mermaid
 timeline
-    GitLab CI : Set up repository
-              : Create pipeline
-              : Build containers
-    ArgoCD : Install ArgoCD
-           : Configure sync
-           : Deploy app
+    Days 1-2 : Admission control
+             : Kyverno policies
+    Days 3-4 : Supply chain + Runtime
+             : Syft · Cosign · Falco
+    Day 5    : End-to-end testing
+             : Presentation
 ```
-
-### Week 3-4: Observability & Monitoring
-```mermaid
-timeline
-    Observability Stack : Install Prometheus
-                        : Configure Grafana
-                        : Set up Loki & Tempo
-    Application Monitoring : Instrument code
-                           : Create dashboards
-                           : Configure alerts
-```
-
-You'll learn to:
-
-1. **Local Kubernetes Setup**
-   - Choose a local Kubernetes solution
-   - Set up your cluster
-   - Learn basic Kubernetes concepts
-
-2. **Helm Chart Creation**
-   - Package the application
-   - Configure deployments
-   - Manage different environments
-
-3. **CI/CD Pipeline**
-   - Set up GitLab CI
-   - Build containers
-   - Automate deployments
-
-4. **GitOps with ArgoCD**
-   - Install ArgoCD
-   - Configure applications
-   - Implement GitOps workflow
-
-5. **Observability Stack**
-   - Deploy Prometheus, Grafana, Loki, Tempo
-   - Create monitoring dashboards
-   - Set up alerting and instrumentation
 
 ## Step-by-Step Guides
 
-1. [Local Development Setup](./01-local-setup.md)
-   - Setting up your Kubernetes cluster
-   - Basic concepts and commands
-   - First deployment
+1. [DevSecOps Introduction](./10-devsecops-intro.md)
+   - Shift-left security, P0/P1 controls
+   - How Phase 2 builds on Phase 1
+   - The security mindset
 
-2. [Helm Chart Creation](./02-helm-charts.md)
-   - Creating your first chart
-   - Converting our app
-   - Testing deployments
+2. [SAST, SCA & Secrets Scanning](./11-sast-sca-scanning.md)
+   - Gitleaks — secrets detection in every push
+   - Semgrep — static code analysis (OWASP Top 10)
+   - Trivy — dependency and image scanning
+   - Adding all three to GitLab CI
 
-3. [GitLab CI Setup](./03-gitlab-ci.md)
-   - Pipeline configuration
-   - Building images
-   - Automated deployment
+3. [Secrets Management](./12-secrets-management.md)
+   - Installing External Secrets Operator
+   - Setting up HashiCorp Vault (local dev)
+   - Migrating database credentials out of Git
+   - SecretStore and ExternalSecret CRDs
 
-4. [ArgoCD Setup](./04-argocd-setup.md)
-   - Installing ArgoCD
-   - Application setup
-   - GitOps workflow
+4. [Manifest Security](./13-manifest-security.md)
+   - Scanning Helm charts with Checkov
+   - Fixing common misconfigurations (non-root, resource limits, no latest tag)
+   - Adding Checkov to the CI pipeline
 
-5. [Deployment Guide](./05-deployment.md)
-   - Putting it all together
-   - Testing everything
-   - Troubleshooting
+5. [Admission Control](./14-admission-control.md)
+   - Installing Kyverno
+   - Core policies: non-root, resource limits, no latest tag, signed images
+   - Audit mode vs Enforce mode
+   - Verifying ArgoCD still syncs
 
-6. [Observability Setup](./06-observability-setup.md)
-   - Installing the PGLT stack
-   - Basic configuration
-   - Testing monitoring
+6. [Supply Chain Security](./15-supply-chain-security.md)
+   - Generating SBOMs with Syft (CycloneDX format)
+   - Signing images with Cosign (keyless)
+   - Attaching SBOMs to images in the registry
+   - Kyverno policy to verify signatures at admission
 
-7. [Grafana Dashboards](./07-grafana-dashboards.md)
-   - Creating effective dashboards
-   - Essential panels and metrics
-   - Best practices
+7. [Runtime Security](./16-runtime-security.md)
+   - Installing Falco with eBPF probe
+   - Writing custom rules for your application
+   - Forwarding alerts to Loki
+   - Building a Grafana security dashboard
 
-8. [Alerting Setup](./08-alerting-setup.md)
-   - Configuring alerts
-   - Notification channels
-   - Alert best practices
+## Deliverables
 
-9. [Application Instrumentation](./09-app-instrumentation.md)
-   - Adding metrics to your code
-   - Structured logging
-   - Performance monitoring
-
-## Phase 2: DevSecOps Guides
-
-If you are on the `devsecops` branch, continue with:
-
-10. [DevSecOps Introduction](./10-devsecops-intro.md)
-    - Shift-left security, P0/P1 controls, how Phase 2 builds on Phase 1
-
-11. [SAST, SCA & Secrets Scanning](./11-sast-sca-scanning.md)
-    - Gitleaks, Semgrep, Trivy in GitLab CI
-
-12. [Secrets Management](./12-secrets-management.md)
-    - External Secrets Operator and HashiCorp Vault
-
-13. [Manifest Security](./13-manifest-security.md)
-    - Checkov scanning for Helm charts and K8s manifests
-
-14. [Admission Control](./14-admission-control.md)
-    - Kyverno policies and enforcement
-
-15. [Supply Chain Security](./15-supply-chain-security.md)
-    - Syft SBOM generation and Cosign image signing
-
-16. [Runtime Security](./16-runtime-security.md)
-    - Falco threat detection with Grafana alerting
-
-See [DevSecOps Capstone Requirements](./devsecops-capstone-requirements.md) for Phase 2 deliverables and evaluation.
-
----
+See [DevSecOps Capstone Requirements](./devsecops-capstone-requirements.md) for the full breakdown of deliverables, evaluation criteria, and timeline.
 
 ## Getting Help
 
 If you get stuck:
-1. Check the app's documentation
-2. Review error messages
+1. Re-read the relevant guide — most issues are covered in the troubleshooting section
+2. Check `kubectl describe` and pod logs for errors
 3. Ask during lab sessions
 
-## Timeline
+## Remember
 
-### Week 1: Foundation
-- Days 1-2: Local Kubernetes
-- Days 3-4: Helm Charts
-- Day 5: Review and fixes
-
-### Week 2: Implementation
-- Days 1-2: GitLab CI
-- Days 3-4: ArgoCD
-- Day 5: Final testing
-
-### Week 3: Observability
-- Days 1-2: Install monitoring stack
-- Days 3-4: Create dashboards and alerts
-- Day 5: Application instrumentation
-
-### Week 4: Advanced Monitoring
-- Days 1-2: Advanced dashboards
-- Days 3-4: Performance optimization
-- Day 5: Documentation and presentation
-
-Remember:
-- Take it step by step
-- Test each part
-- Ask questions when needed
-- Keep it simple!
+- Phase 1 must be working before starting Phase 2
+- Implement in order — each guide builds on the previous one
+- Start policies in Audit mode before switching to Enforce
+- A failed scan is a success — you caught something before production
+- Test each control before moving to the next
