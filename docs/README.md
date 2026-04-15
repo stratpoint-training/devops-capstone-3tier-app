@@ -157,6 +157,35 @@ You'll learn to:
    - Structured logging
    - Performance monitoring
 
+## Phase 2: DevSecOps Guides
+
+If you are on the `devsecops` branch, continue with:
+
+10. [DevSecOps Introduction](./10-devsecops-intro.md)
+    - Shift-left security, P0/P1 controls, how Phase 2 builds on Phase 1
+
+11. [SAST, SCA & Secrets Scanning](./11-sast-sca-scanning.md)
+    - Gitleaks, Semgrep, Trivy in GitLab CI
+
+12. [Secrets Management](./12-secrets-management.md)
+    - External Secrets Operator and HashiCorp Vault
+
+13. [Manifest Security](./13-manifest-security.md)
+    - Checkov scanning for Helm charts and K8s manifests
+
+14. [Admission Control](./14-admission-control.md)
+    - Kyverno policies and enforcement
+
+15. [Supply Chain Security](./15-supply-chain-security.md)
+    - Syft SBOM generation and Cosign image signing
+
+16. [Runtime Security](./16-runtime-security.md)
+    - Falco threat detection with Grafana alerting
+
+See [DevSecOps Capstone Requirements](./devsecops-capstone-requirements.md) for Phase 2 deliverables and evaluation.
+
+---
+
 ## Getting Help
 
 If you get stuck:

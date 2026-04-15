@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevSecOps Engineering Course — Phase 2</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50">
+  <div class="container mx-auto px-4 py-8">
+
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center bg-red-100 text-red-700 px-4 py-1 rounded-full text-sm font-medium mb-3">
+        Phase 2 — Builds on Phase 1 DevOps
+      </div>
+      <h1 class="text-3xl font-bold">DevSecOps Engineering Course</h1>
+      <p class="text-gray-500 mt-2">Security at every stage of the pipeline</p>
+    </div>
+
+    <!-- Course Overview -->
+    <div class="bg-white rounded-lg shadow p-6 mb-6">
+      <h2 class="text-xl font-semibold text-red-600 mb-4">Course Overview</h2>
+      <p class="text-gray-600 mb-4">
+        In Phase 1 you built a complete DevOps pipeline. In Phase 2, you will secure it — adding automated
+        security scanning, secrets management, policy enforcement, supply chain controls, and runtime threat
+        detection. Security is not a separate step; it runs at every stage.
+      </p>
+      <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-4">
+        <p class="text-yellow-700 font-medium">
+          ⚠️ Prerequisite: Your Phase 1 pipeline (K8s, Helm, GitLab CI, ArgoCD, Observability) must be
+          working before starting this phase.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+        <div class="bg-gray-50 p-4 rounded border border-gray-200 text-center">
+          <div class="text-2xl font-bold text-red-600">2</div>
+          <div class="text-sm text-gray-600">Weeks</div>
+        </div>
+        <div class="bg-gray-50 p-4 rounded border border-gray-200 text-center">
+          <div class="text-2xl font-bold text-red-600">7</div>
+          <div class="text-sm text-gray-600">Security Controls</div>
+        </div>
+        <div class="bg-gray-50 p-4 rounded border border-gray-200 text-center">
+          <div class="text-2xl font-bold text-red-600">5</div>
+          <div class="text-sm text-gray-600">Deliverables (20% each)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- What You'll Build -->
+    <div class="bg-white rounded-lg shadow p-6 mb-6">
+      <h2 class="text-xl font-semibold text-red-600 mb-4">What You'll Build</h2>
+      <p class="text-gray-600 mb-4">A complete DevSecOps pipeline that enforces security at every layer:</p>
+      <div class="bg-gray-900 text-green-400 rounded-lg p-4 font-mono text-sm overflow-x-auto">
+        <pre>
+Developer Push
+    │
+    ▼
+GitLab CI Pipeline
+    ├── 🔍 Gitleaks       — secrets detection
+    ├── 🔍 Semgrep        — static code analysis (SAST)
+    ├── 🔍 Trivy          — dependency scan (SCA)
+    ├── 🏗️  Build Image
+    ├── 🔍 Trivy          — image vulnerability scan
+    ├── 📋 Syft           — generate SBOM
+    └── ✍️  Cosign        — sign image
+    │
+    ▼
+Kubernetes Cluster
+    ├── 🛡️  Kyverno        — admission control policies
+    │   ├── require non-root
+    │   ├── require resource limits
+    │   ├── disallow latest tag
+    │   └── verify image signatures
+    ├── 🔐 External Secrets Operator
+    │   └── secrets from Vault (never in Git)
+    └── 👁️  Falco          — runtime threat detection
+            └── alerts → Loki → Grafana</pre>
+      </div>
+    </div>
+
+    <!-- Prerequisites -->
+    <div class="bg-white rounded-lg shadow p-6 mb-6">
+      <h2 class="text-xl font-semibold text-red-600 mb-4">Prerequisites</h2>
+      <div class="space-y-3">
+        <div class="flex items-start space-x-3">
+          <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+          <div>
+            <span class="font-medium">Phase 1 complete</span>
+            <p class="text-sm text-gray-600">Working Kubernetes cluster, Helm, GitLab CI, ArgoCD, and observability stack</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-3">
+          <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+          <div>
+            <span class="font-medium">GitLab.com account</span>
+            <p class="text-sm text-gray-600">Same account used in Phase 1</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-3">
+          <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+          <div>
+            <span class="font-medium">Python 3 (for Checkov and Semgrep)</span>
+            <p class="text-sm text-gray-600">pip install checkov semgrep</p>
+          </div>
+        </div>
+        <div class="flex items-start space-x-3">
+          <svg class="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+          <div>
+            <span class="font-medium">Helm repos</span>
+            <p class="text-sm text-gray-600">external-secrets, kyverno, falcosecurity, hashicorp (added during lab)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Security Controls Overview -->
+    <div class="bg-white rounded-lg shadow p-6 mb-6">
+      <h2 class="text-xl font-semibold text-red-600 mb-4">Security Controls: P0 vs P1</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <div class="flex items-center mb-3">
+            <span class="bg-red-600 text-white text-xs font-bold px-2 py-1 rounded mr-2">P0</span>
+            <span class="font-semibold">Non-negotiable</span>
+          </div>
+          <ul class="space-y-2 text-sm text-gray-700">
+            <li class="flex items-center space-x-2">
+              <span class="text-red-500">●</span>
+              <span>No secrets in Git or environment variables</span>
+            </li>
+            <li class="flex items-center space-x-2">
+              <span class="text-red-500">●</span>
+              <span>Images scanned for CVEs before deploy</span>
+            </li>
+            <li class="flex items-center space-x-2">
+              <span class="text-red-500">●</span>
+              <span>Manifests scanned for misconfigurations</span>
+            </li>
+            <li class="flex items-center space-x-2">
+              <span class="text-red-500">●</span>
+              <span>Signed images verified at admission</span>
+            </li>
+            <li class="flex items-center space-x-2">
+              <span class="text-red-500">●</span>
+              <span>Containers must not run as root</span>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <div class="flex items-center mb-3">
+            <span class="bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded mr-2">P1</span>
+            <span class="font-semibold">Strongly Recommended</span>
+          </div>
+          <ul class="space-y-2 text-sm text-gray-700">
+            <li class="flex items-center space-x-2">
+              <span class="text-orange-500">●</span>
+              <span>SBOM generated for every build</span>
+            </li>
+            <li class="flex items-center space-x-2">
+              <span class="text-orange-500">●</span>
+              <span>Runtime threat detection (Falco)</span>
+            </li>
+            <li class="flex items-center space-x-2">
+              <span class="text-orange-500">●</span>
+              <span>Admission controllers for all policies</span>
+            </li>
+            <li class="flex items-center space-x-2">
+              <span class="text-orange-500">●</span>
+              <span>Security alerts in Grafana</span>
+            </li>
+            <li class="flex items-center space-x-2">
+              <span class="text-orange-500">●</span>
+              <span>Network policies between pods</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Video Resources -->
+    <div class="bg-white rounded-lg shadow p-6 mb-6">
+      <h2 class="text-xl font-semibold text-red-600 mb-4">Video Resources</h2>
+      <div class="space-y-4">
+
+        <!-- Module 1 -->
+        <div class="bg-gray-50 p-4 rounded border border-gray-200">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-semibold text-gray-800">Module 1 — DevSecOps Fundamentals</h3>
+            <span class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded">Week 1, Day 1</span>
+          </div>
+          <p class="text-sm text-gray-600 mb-2">Shift-left security, threat modeling basics, OWASP Top 10, CI/CD security patterns</p>
+          <a href="https://www.youtube.com/results?search_query=devsecops+fundamentals+shift+left+security" target="_blank" rel="noopener noreferrer"
+            class="text-blue-600 hover:underline text-sm">Search: DevSecOps Fundamentals →</a>
+        </div>
+
+        <!-- Module 2 -->
+        <div class="bg-gray-50 p-4 rounded border border-gray-200">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-semibold text-gray-800">Module 2 — SAST, SCA & Secrets Scanning</h3>
+            <span class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded">Week 1, Days 1–2</span>
+          </div>
+          <p class="text-sm text-gray-600 mb-2">Semgrep rules and rulesets, Trivy image scanning, Gitleaks secret detection, GitLab CI integration</p>
+          <div class="space-y-1">
+            <a href="https://www.youtube.com/results?search_query=semgrep+tutorial+gitlab+ci" target="_blank" rel="noopener noreferrer"
+              class="text-blue-600 hover:underline text-sm block">Search: Semgrep GitLab CI Tutorial →</a>
+            <a href="https://www.youtube.com/results?search_query=trivy+container+scanning+tutorial" target="_blank" rel="noopener noreferrer"
+              class="text-blue-600 hover:underline text-sm block">Search: Trivy Container Scanning →</a>
+          </div>
+        </div>
+
+        <!-- Module 3 -->
+        <div class="bg-gray-50 p-4 rounded border border-gray-200">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-semibold text-gray-800">Module 3 — Secrets Management</h3>
+            <span class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded">Week 1, Days 3–4</span>
+          </div>
+          <p class="text-sm text-gray-600 mb-2">HashiCorp Vault basics, External Secrets Operator, SecretStore and ExternalSecret CRDs</p>
+          <div class="space-y-1">
+            <a href="https://www.youtube.com/results?search_query=external+secrets+operator+kubernetes+vault" target="_blank" rel="noopener noreferrer"
+              class="text-blue-600 hover:underline text-sm block">Search: External Secrets Operator + Vault →</a>
+            <a href="https://www.youtube.com/results?search_query=hashicorp+vault+kubernetes+tutorial" target="_blank" rel="noopener noreferrer"
+              class="text-blue-600 hover:underline text-sm block">Search: HashiCorp Vault Kubernetes Tutorial →</a>
+          </div>
+        </div>
+
+        <!-- Module 4 -->
+        <div class="bg-gray-50 p-4 rounded border border-gray-200">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-semibold text-gray-800">Module 4 — Kyverno Admission Control</h3>
+            <span class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded">Week 2, Days 1–2</span>
+          </div>
+          <p class="text-sm text-gray-600 mb-2">Kyverno policies, validate vs mutate vs generate rules, policy reports, audit vs enforce modes</p>
+          <a href="https://www.youtube.com/results?search_query=kyverno+kubernetes+policy+tutorial" target="_blank" rel="noopener noreferrer"
+            class="text-blue-600 hover:underline text-sm">Search: Kyverno Kubernetes Policy Tutorial →</a>
+        </div>
+
+        <!-- Module 5 -->
+        <div class="bg-gray-50 p-4 rounded border border-gray-200">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-semibold text-gray-800">Module 5 — Supply Chain Security (Cosign + Syft)</h3>
+            <span class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded">Week 2, Days 3–4</span>
+          </div>
+          <p class="text-sm text-gray-600 mb-2">SBOM generation with Syft, keyless image signing with Cosign, Sigstore ecosystem, SLSA framework</p>
+          <div class="space-y-1">
+            <a href="https://www.youtube.com/results?search_query=cosign+image+signing+sigstore+tutorial" target="_blank" rel="noopener noreferrer"
+              class="text-blue-600 hover:underline text-sm block">Search: Cosign Image Signing Sigstore →</a>
+            <a href="https://www.youtube.com/results?search_query=syft+sbom+generation+tutorial" target="_blank" rel="noopener noreferrer"
+              class="text-blue-600 hover:underline text-sm block">Search: Syft SBOM Generation →</a>
+          </div>
+        </div>
+
+        <!-- Module 6 -->
+        <div class="bg-gray-50 p-4 rounded border border-gray-200">
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-semibold text-gray-800">Module 6 — Runtime Security with Falco</h3>
+            <span class="text-xs bg-red-100 text-red-700 px-2 py-1 rounded">Week 2, Days 3–4</span>
+          </div>
+          <p class="text-sm text-gray-600 mb-2">Falco rules and conditions, eBPF probes, Falcosidekick integrations, custom rules, Grafana dashboards</p>
+          <div class="space-y-1">
+            <a href="https://www.youtube.com/results?search_query=falco+kubernetes+runtime+security+tutorial" target="_blank" rel="noopener noreferrer"
+              class="text-blue-600 hover:underline text-sm block">Search: Falco Kubernetes Runtime Security →</a>
+            <a href="https://www.youtube.com/results?search_query=falco+grafana+loki+security+dashboard" target="_blank" rel="noopener noreferrer"
+              class="text-blue-600 hover:underline text-sm block">Search: Falco Grafana Loki Dashboard →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Project Implementation -->
+    <div class="bg-white rounded-lg shadow p-6 mb-6">
+      <h2 class="text-xl font-semibold text-red-600 mb-4">Project Implementation</h2>
+      <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-4">
+        <p class="text-blue-700 font-medium">
+          You will work on the same GitLab repository from Phase 1. Switch to the <code class="bg-blue-100 px-1 rounded">devsecops</code> branch of the training repo to access Phase 2 guides.
+        </p>
+      </div>
+
+      <h3 class="font-semibold text-gray-800 mb-2">Repository Structure (Phase 2 additions)</h3>
+      <div class="bg-gray-900 text-green-400 rounded-lg p-4 font-mono text-sm mb-4 overflow-x-auto">
+        <pre>
+your-gitlab-project/
+├── .gitlab-ci.yml          ← Add security stages here
+├── helm/
+│   └── three-tier-app/     ← Update templates with security contexts
+├── policies/
+│   ├── kyverno/            ← New: Kyverno policy YAMLs
+│   └── falco/
+│       └── custom-rules.yaml  ← New: Custom Falco rules
+├── secrets/
+│   ├── secretstore.yaml    ← New: ESO SecretStore
+│   └── externalsecret-db.yaml ← New: ExternalSecret for DB creds
+└── docs/                   ← Phase 2 guides: 10–16</pre>
+      </div>
+
+      <h3 class="font-semibold text-gray-800 mb-2">Implementation Order</h3>
+      <div class="space-y-2">
+        <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded border border-gray-200">
+          <span class="bg-red-600 text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">1</span>
+          <div>
+            <span class="font-medium">Read the intro</span>
+            <p class="text-sm text-gray-600">docs/10-devsecops-intro.md — understand the security model before writing any config</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded border border-gray-200">
+          <span class="bg-red-600 text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">2</span>
+          <div>
+            <span class="font-medium">Add pipeline scanning</span>
+            <p class="text-sm text-gray-600">docs/11-sast-sca-scanning.md — Gitleaks + Semgrep + Trivy in GitLab CI</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded border border-gray-200">
+          <span class="bg-red-600 text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">3</span>
+          <div>
+            <span class="font-medium">Migrate secrets</span>
+            <p class="text-sm text-gray-600">docs/12-secrets-management.md — ESO + Vault, remove all hardcoded credentials</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded border border-gray-200">
+          <span class="bg-red-600 text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">4</span>
+          <div>
+            <span class="font-medium">Scan manifests</span>
+            <p class="text-sm text-gray-600">docs/13-manifest-security.md — Checkov on Helm charts, fix all HIGH/CRITICAL findings</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded border border-gray-200">
+          <span class="bg-red-600 text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">5</span>
+          <div>
+            <span class="font-medium">Enforce policies</span>
+            <p class="text-sm text-gray-600">docs/14-admission-control.md — Kyverno with 4 core policies</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded border border-gray-200">
+          <span class="bg-red-600 text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">6</span>
+          <div>
+            <span class="font-medium">Secure the supply chain</span>
+            <p class="text-sm text-gray-600">docs/15-supply-chain-security.md — Syft SBOM + Cosign signing</p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded border border-gray-200">
+          <span class="bg-red-600 text-white text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0">7</span>
+          <div>
+            <span class="font-medium">Add runtime security</span>
+            <p class="text-sm text-gray-600">docs/16-runtime-security.md — Falco + Grafana security dashboard</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Weekly Plan -->
+    <div class="bg-white rounded-lg shadow p-6 mb-6">
+      <h2 class="text-xl font-semibold text-red-600 mb-4">Two-Week Implementation Plan</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
+            <span class="bg-red-600 text-white text-xs px-2 py-0.5 rounded mr-2">Week 1</span>
+            Pipeline & Cluster Security
+          </h3>
+          <div class="space-y-2 text-sm">
+            <div class="flex items-start space-x-2">
+              <span class="text-gray-400 flex-shrink-0 font-mono">D1–2</span>
+              <span>Add Gitleaks, Semgrep, Trivy to GitLab CI. Trigger a finding intentionally, fix it.</span>
+            </div>
+            <div class="flex items-start space-x-2">
+              <span class="text-gray-400 flex-shrink-0 font-mono">D3–4</span>
+              <span>Install ESO + Vault. Migrate DB credentials to ExternalSecret. Verify app still works.</span>
+            </div>
+            <div class="flex items-start space-x-2">
+              <span class="text-gray-400 flex-shrink-0 font-mono">D5</span>
+              <span>Run Checkov locally. Fix all HIGH/CRITICAL findings. Add Checkov to pipeline.</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3 class="font-semibold text-gray-800 mb-3 flex items-center">
+            <span class="bg-red-600 text-white text-xs px-2 py-0.5 rounded mr-2">Week 2</span>
+            Advanced Controls & Runtime
+          </h3>
+          <div class="space-y-2 text-sm">
+            <div class="flex items-start space-x-2">
+              <span class="text-gray-400 flex-shrink-0 font-mono">D1–2</span>
+              <span>Install Kyverno. Apply 4 policies in Audit mode. Fix violations. Switch to Enforce.</span>
+            </div>
+            <div class="flex items-start space-x-2">
+              <span class="text-gray-400 flex-shrink-0 font-mono">D3–4</span>
+              <span>Add Syft + Cosign to CI. Install Falco. Write custom rules. Connect to Loki.</span>
+            </div>
+            <div class="flex items-start space-x-2">
+              <span class="text-gray-400 flex-shrink-0 font-mono">D5</span>
+              <span>End-to-end test. Simulate attack (shell in container). Demo Falco detecting it. Presentation prep.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Workflow Diagram -->
+    <div class="bg-white rounded-lg shadow p-6 mb-6">
+      <h2 class="text-xl font-semibold text-red-600 mb-4">DevSecOps Workflow</h2>
+      <div class="grid grid-cols-1 md:grid-cols-5 gap-2 text-center text-sm">
+        <div class="bg-gray-100 rounded-lg p-3">
+          <div class="text-2xl mb-1">👩‍💻</div>
+          <div class="font-semibold">Developer</div>
+          <div class="text-xs text-gray-500 mt-1">Push code to GitLab</div>
+        </div>
+        <div class="flex items-center justify-center text-gray-400 text-xl">→</div>
+        <div class="bg-red-50 border border-red-200 rounded-lg p-3">
+          <div class="text-2xl mb-1">🔍</div>
+          <div class="font-semibold text-red-700">CI Security</div>
+          <div class="text-xs text-gray-500 mt-1">Scan → Build → Sign</div>
+        </div>
+        <div class="flex items-center justify-center text-gray-400 text-xl">→</div>
+        <div class="bg-red-50 border border-red-200 rounded-lg p-3">
+          <div class="text-2xl mb-1">🛡️</div>
+          <div class="font-semibold text-red-700">Cluster Security</div>
+          <div class="text-xs text-gray-500 mt-1">Admit → Monitor</div>
+        </div>
+      </div>
+      <div class="mt-4 text-xs text-gray-500 text-center">
+        Any stage can block the pipeline. Security is not optional — it runs everywhere.
+      </div>
+    </div>
+
+    <!-- Final Presentation -->
+    <div class="bg-white rounded-lg shadow p-6 mb-6">
+      <h2 class="text-xl font-semibold text-red-600 mb-4">Final Presentation (30 minutes)</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <h3 class="font-semibold text-gray-800 mb-2">Technical Demo (20 min)</h3>
+          <ul class="text-sm text-gray-600 space-y-1">
+            <li>✓ Live pipeline run — show all security stages</li>
+            <li>✓ Show a scan catching a real finding</li>
+            <li>✓ Deploy app — show Kyverno blocking non-compliant workload</li>
+            <li>✓ Trigger a shell in a container — show Falco alerting in Grafana</li>
+            <li>✓ Show SBOM attached to image in registry</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-semibold text-gray-800 mb-2">Q&A Preparation (10 min)</h3>
+          <ul class="text-sm text-gray-600 space-y-1">
+            <li>✓ What does each tool protect against?</li>
+            <li>✓ What is the difference between P0 and P1 controls?</li>
+            <li>✓ What happens if Kyverno is removed?</li>
+            <li>✓ How would you respond to a Falco CRITICAL alert?</li>
+            <li>✓ What does "shift-left" mean in practice?</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center text-sm text-gray-400 mt-8">
+      Phase 2 — DevSecOps Engineering · Stratpoint Training Program
+    </div>
+
+  </div>
+</body>
+</html>
