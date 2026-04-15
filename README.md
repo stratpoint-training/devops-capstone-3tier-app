@@ -1,163 +1,137 @@
-# DevOps Capstone Project: 3-Tier Task Management Application
+# DevSecOps Capstone Project: 3-Tier Task Management Application — Phase 2
 
-This repository contains a task management application and its complete DevOps implementation. The project demonstrates modern DevOps practices including containerization, Kubernetes orchestration, CI/CD pipelines, and GitOps workflows.
+This is the **Phase 2 — DevSecOps** branch. It builds on Phase 1 by adding security at every stage of the pipeline and cluster.
 
-## Project Overview
+> **Prerequisite:** Complete Phase 1 (main branch) before starting here.
 
-### Application Architecture
-- **Frontend**: React-based UI for task management
+## What You're Securing
+
+The same 3-tier task management app from Phase 1:
+- **Frontend**: React UI
 - **Backend**: Node.js/Express REST API
-- **Database**: PostgreSQL for data persistence
+- **Database**: PostgreSQL
 
-### DevOps Implementation
-- Local Kubernetes deployment
-- Helm chart packaging
-- GitLab CI/CD pipeline
-- GitOps with ArgoCD
+Your Phase 1 pipeline (Kubernetes, Helm, GitLab CI, ArgoCD, Observability) is the foundation. Phase 2 adds security on top of it.
 
 ## Quick Start
 
-1. **Local Development**
 ```bash
+# Run the app locally
 cd app
 docker compose up
 ```
-Access the application at:
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:3001
 
-2. **Kubernetes Deployment**
-- Follow the guides in the [docs](./docs) directory for:
-  - Local Kubernetes setup
-  - Helm chart deployment
-  - CI/CD pipeline configuration
-  - ArgoCD implementation
+Then follow the guides in order starting from [docs/10-devsecops-intro.md](./docs/10-devsecops-intro.md).
+
+## What You'll Implement
+
+```
+Developer Push
+    │
+    ▼
+GitLab CI
+    ├── Gitleaks       — secrets detection
+    ├── Semgrep        — SAST (OWASP Top 10)
+    ├── Trivy          — dependency + image scan
+    ├── Build Image
+    ├── Syft           — generate SBOM
+    └── Cosign         — sign image
+    │
+    ▼
+Kubernetes Cluster
+    ├── Kyverno        — admission control policies
+    ├── External Secrets Operator — secrets from Vault
+    └── Falco          — runtime threat detection → Grafana
+```
 
 ## Project Structure
 
 ```
 .
-├── app/                    # Application source code
-│   ├── frontend/          # React frontend
-│   ├── backend/           # Node.js API
-│   └── database/          # PostgreSQL setup
+├── app/                          # Application source code (provided, do not modify)
+│   ├── frontend/
+│   ├── backend/
+│   └── database/
 │
-└── docs/                  # Implementation guides
-    ├── 01-local-setup.md    # Kubernetes setup
-    ├── 02-helm-charts.md    # Helm configuration
-    ├── 03-gitlab-ci.md      # CI/CD pipeline
-    ├── 04-argocd-setup.md   # ArgoCD setup
-    ├── 05-deployment.md     # Deployment guide
-    ├── 06-observability-setup.md    # PGLT stack setup
-    ├── 07-grafana-dashboards.md     # Dashboard creation
-    ├── 08-alerting-setup.md         # Alerting configuration
-    └── 09-app-instrumentation.md    # Code instrumentation
+├── docs/                         # Phase 2 implementation guides
+│   ├── 10-devsecops-intro.md     # Start here
+│   ├── 11-sast-sca-scanning.md   # Gitleaks · Semgrep · Trivy
+│   ├── 12-secrets-management.md  # ESO + Vault
+│   ├── 13-manifest-security.md   # Checkov
+│   ├── 14-admission-control.md   # Kyverno
+│   ├── 15-supply-chain-security.md # Syft + Cosign
+│   ├── 16-runtime-security.md    # Falco
+│   └── devsecops-capstone-requirements.md
+│
+├── devsecops-training.html       # Phase 2 training landing page
+└── .gitlab-ci.yml                # Your pipeline (you will add security stages)
 ```
 
 ## Implementation Requirements
 
-### 1. Local Kubernetes Environment (25%)
-- Local cluster setup (Minikube/kind/k3d)
-- Namespace configuration
-- Ingress setup
+### 1. Pipeline Security (20%)
+- Gitleaks, Semgrep, Trivy scanning in GitLab CI
+- Pipeline blocks on HIGH/CRITICAL findings
 
-### 2. Helm Chart Development (25%)
-- Application Helm charts
-- Configuration management
-- Secret handling
+### 2. Secrets Management (20%)
+- External Secrets Operator + HashiCorp Vault
+- No credentials in Git or values.yaml
 
-### 3. GitLab CI Pipeline (25%)
-- Automated build pipeline
-- Container image management
-- Deployment automation
+### 3. Manifest Security (20%)
+- Checkov scanning Helm charts and K8s manifests
+- All HIGH/CRITICAL findings fixed
 
-### 4. ArgoCD Implementation (20%)
-- GitOps workflow
-- Application synchronization
-- Deployment management
+### 4. Admission Control (20%)
+- Kyverno with 4 core policies enforced
+- Signed image verification at admission
 
-### 5. Observability Stack (20%)
-- Prometheus metrics collection
-- Grafana dashboards and visualization
-- Loki log aggregation
-- Tempo distributed tracing
-- Application instrumentation
-
-## Documentation
-
-- [Application Guide](./app/README.md) - Application setup and development
-- [Quick Start Guide](./app/QUICKSTART.md) - Getting started quickly
-- [Implementation Guide](./docs/README.md) - DevOps implementation steps
+### 5. Supply Chain + Runtime Security (20%)
+- Syft SBOM + Cosign image signing in CI
+- Falco runtime detection with Grafana dashboard
 
 ## Timeline
 
-### Week 1: Foundation
-- Days 1-2: Local Kubernetes setup
-- Days 3-4: Helm chart creation
-- Day 5: Review and documentation
+### Week 1: Pipeline & Cluster Security
+- Days 1–2: SAST, SCA, secrets scanning in GitLab CI
+- Days 3–4: External Secrets Operator + Vault
+- Day 5: Checkov manifest scanning
 
-### Week 2: Implementation
-- Days 1-2: GitLab CI setup
-- Days 3-4: ArgoCD configuration
-- Day 5: Final testing
-
-### Week 3: Observability
-- Days 1-2: Install Prometheus, Grafana, Loki, Tempo
-- Days 3-4: Create dashboards and configure alerts
-- Day 5: Application instrumentation
-
-### Week 4: Advanced Monitoring
-- Days 1-2: Advanced dashboards and performance monitoring
-- Days 3-4: Optimization and troubleshooting
-- Day 5: Documentation and final presentation
+### Week 2: Advanced Controls & Runtime
+- Days 1–2: Kyverno admission control
+- Days 3–4: Syft + Cosign + Falco
+- Day 5: End-to-end testing and presentation
 
 ## Evaluation Criteria
 
-### Basic Implementation (70-79%)
-- Working local cluster
-- Basic Helm deployment
-- Simple CI pipeline
-- ArgoCD connection
+### Basic (70–79%)
+- At least 2 scanning jobs in CI
+- ESO installed with at least 1 secret managed
+- Kyverno installed with at least 2 policies
+- Falco running with default rules
 
-### Proficient Implementation (80-89%)
-- Well-organized resources
-- Environment separation
-- Working CI/CD pipeline
-- Basic observability stack
-- Functional dashboards and alerts
+### Proficient (80–89%)
+- All 4 scanning jobs in CI
+- All DB credentials via ESO
+- Checkov in CI, 0 HIGH/CRITICAL in Helm chart
+- All 4 Kyverno policies enforced
+- Falco alerts visible in Grafana
 
-### Advanced Implementation (90-100%)
-- Multiple environments
-- Automated testing
-- Automated sync policies
-- Complete observability implementation
-- Advanced dashboards and alerting
-- Application performance monitoring
-- Comprehensive documentation
+### Advanced (90–100%)
+- All of the above plus:
+- Images signed + Kyverno signature verification
+- Custom Falco rules for your application
+- SBOM attached to images in registry
+- Grafana security dashboard with alert rules
+- Full end-to-end demo
 
-## Optional Features
+## Documentation
 
-1. **Security** (+5%)
-   - Secret management
-   - RBAC configuration
-
-2. **Advanced Features** (+5%)
-   - Health monitoring
-   - Rollback strategies
-
-3. **Advanced Observability** (+5%)
-   - Custom metrics and dashboards
-   - Distributed tracing implementation
-   - Performance optimization based on monitoring data
+- [Training Guide](./devsecops-training.html) — Open in browser for Phase 2 overview and video resources
+- [Implementation Guides](./docs/README.md) — Step-by-step guides 10–16
+- [Capstone Requirements](./docs/devsecops-capstone-requirements.md) — Deliverables and evaluation
 
 ## Support
 
-Need assistance?
-1. Review the detailed documentation in the [docs](./docs) directory
-2. Check error messages and logs
-3. Participate in lab sessions
-4. Refer to official documentation:
-   - [Kubernetes](https://kubernetes.io/docs/)
-   - [Helm](https://helm.sh/docs/)
-   - [GitLab CI](https://docs.gitlab.com/ee/ci/)
-   - [ArgoCD](https://argo-cd.readthedocs.io/)
+1. Check the troubleshooting section in each guide
+2. Run `kubectl describe` and check pod logs for errors
+3. Ask during lab sessions
